@@ -1,0 +1,32 @@
+<xml>
+<ToUserName><![CDATA[{{ x_dict.FromUserName }}]]></ToUserName>
+<FromUserName><![CDATA[{{ x_dict.ToUserName }}]]></FromUserName>
+<CreateTime>{{ create_time }}</CreateTime>
+<MsgType><![CDATA[news]]></MsgType>
+<ArticleCount>{{ article_count }}</ArticleCount>
+<Articles>
+<item>
+<Title><![CDATA[{{ title }}  回复'1'获取下一页]]></Title>
+<Description><![CDATA[{{ description }}]]></Description>
+<PicUrl><![CDATA[{{ picurl }}]]></PicUrl>
+<Url><![CDATA[{{ url }}]]></Url>
+</item>{% if sub_rt %}{% for item in sub_rt %}
+<item>
+<Title><![CDATA[题名：{{ item.title}}
+责任者：{{ item.author}}
+出版者：{{ item.press }}
+出版年：{{ item.year }}
+索取号：{{ item.ac_num }}
+馆藏：{{ item.quantity }}  可借：{{ item.lendable }}]]></Title>
+<Description><![CDATA[{{ description }}]]></Description>
+<PicUrl><![CDATA[{{ picurl }}]]></PicUrl>
+<Url><![CDATA[{{ url }}]]></Url>
+</item>{% endfor %} {% ifnotequal sub_rt|length 9 %}
+<item>
+<Title><![CDATA[没有更多的检索数据]]></Title>
+<Description><![CDATA[]]></Description>
+<PicUrl><![CDATA[{{ picurl }}]]></PicUrl>
+<Url><![CDATA[{{ url }}]]></Url>
+</item>{% endifnotequal %}{% endif %}
+</Articles>
+</xml>

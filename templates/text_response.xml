@@ -1,0 +1,7 @@
+<xml>
+<ToUserName><![CDATA[{{ x_dict.FromUserName }}]]></ToUserName>
+<FromUserName><![CDATA[{{ x_dict.TomUserName }}]]></FromUserName>
+<CreateTime>{{ create_time }}</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[{{ msg_content }}]]></Content>
+</xml>
