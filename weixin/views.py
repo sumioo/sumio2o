@@ -15,17 +15,17 @@ def init_srever(request):
 
 def index(request):
     if request.method=='POST':
-        if verify_source(request.GET):
+        if verify_source(request.GET):        #检查请求来源是否合法
             x_dict=convert_xml_to_dict(request)
             from_username=x_dict['FromUserName']
             content=x_dict['Content'].strip()
-            if content != '1':
+            if content != '1':                  #发送来的内容不是'1'（‘1’请求下一页），即为查询关键字
                 kv.delete(from_username) #remove kv user_dict
                 rt,total_nums,current_page,total_page=query_library(content,'title','1')
                 sub_rt=rt[0:9]            #display 9 items on weixin
                 len_sub_rt=len(sub_rt)
-                if len_sub_rt == 9:
-                    if len(rt) > 9:
+                if len_sub_rt == 9:         #图书子结果是否等于9
+                    if len(rt) > 9:         #如果查询图书结果大于9条，则保存
                         user_dict={'rt':rt,
                                    'next':9,
                                    'current_page':current_page,
@@ -36,15 +36,15 @@ def index(request):
                         kv.set(from_username,user_dict)   #save
                     article_count='10'
                     title=u'查询关键字:%s 结果数:%s' %(content,total_nums)
-                elif 0<len_sub_rt<9:
+                elif 0<len_sub_rt<9:                                        #图书结果大于0，小于9
                     article_count=len_sub_rt+2
                     title=u'查询关键字:%s 结果数:%s' %(content,total_nums)
-                else:
+                else:                                                           #无图书查询结果
                     article_count='1'
                     title=u'查询关键字:%s 结果数:%s' %(content,total_nums)
                     description=u'没有您要检索的馆藏书目！'
 
-            else:
+            else:       #查询下一页
                 user_dict=kv.get(from_username)
                 if user_dict:
                     _next=user_dict['next']
@@ -66,7 +66,6 @@ def index(request):
                         sub_rt=user_dict['rt'][_next:]
                         kv.delete(from_username) #remove kv user_dict
                 else:
-
                     article_count='1'
                     title=u'没有更多的数据或查询下一页已过期' #return 'no more data'or'query outdate'
 
