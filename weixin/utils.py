@@ -103,7 +103,7 @@ class Myhtmlparser(HTMLParser):
 def query_library(key_word,title,page):
     '''
     open the school library search page
-    return [ {},.....]
+
     '''
     html=fetch_url(key_word,title,page).read()
     parser=Myhtmlparser()
