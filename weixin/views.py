@@ -5,13 +5,17 @@ from time import time
 from django import template
 from django.http import HttpResponse,HttpResponseRedirect
 import sae.kvdb
-from utils import *
+from utils import verify_source,convert_xml_to_dict,fetch_url,Myhtmlparser,query_library,add_task
 
 kv=sae.kvdb.Client()
 
 def init_srever(request):
-    if request.method=='GET':
-        return HttpResponse(echo_str(request.GET))
+    if request.method == 'GET':
+        echo_str = request.GET.get('echostr','')
+        if verify_source(request.GET) :
+            return HttpResponse(echo_str)
+        else :
+            return HttpResponse('False')
 
 def index(request):
     if request.method=='POST':

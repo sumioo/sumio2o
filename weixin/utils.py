@@ -11,20 +11,6 @@ from sae.taskqueue import Task, TaskQueue
 
 TOKEN='sumioo'
 
-def echo_str(query_dict):
-    signature=query_dict.get('signature','')
-    timestamp=query_dict.get('timestamp','')
-    nonce=query_dict.get('nonce','')
-    echostr=query_dict.get('echostr','')
-    l=[TOKEN,timestamp,nonce]
-    l.sort()
-    st=''.join(l)
-    st=sha1(st).hexdigest()
-    if st == signature:
-        return echostr
-    else:
-        return False
-
 def verify_source(query_dict):
     '''
     verify the request's source.argument query_dict is 'GET' method argument
